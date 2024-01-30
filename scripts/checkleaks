@@ -1,0 +1,39 @@
+#!/bin/sh
+
+# Si el main puede incluir argumentos añadelos en la ejecución de este script
+# ./checkleaks 01_el_patito_feo.txt 03_la_sirenita.txt 05_peter_pan.txt
+
+# Solicitar al usuario la entrada de los archivos fuente con autocontemplado
+echo "Enter the source files to compile (separated by space):"
+read -e -r sources
+
+# Solicitar al usuario los flags de compilación
+echo "Enter the compilation flags (e.g., -Wall -Werror -Wextra, if none, press Enter):"
+read -r flags
+
+# Solicitar al usuario las constantes necesarias
+echo "Enter the necessary constants and their values (e.g., BUFFER_SIZE=42, if none, press Enter):"
+read -r constants
+
+# Comprueba si se ingresaron constantes, si no, las omite
+define_flags=""
+if [ -n "$constants" ]; then
+  define_flags="-D $constants"
+fi
+
+# Compila los archivos fuente con las opciones proporcionadas
+cc -g $flags $define_flags $sources
+
+# Verifica si la compilación tuvo éxito
+if [ $? -ne 0 ]; then
+  echo "Compilation error. Exiting..."
+  exit 1
+fi
+
+# Ejecuta el programa en segundo plano y chequea leaks de memoria
+MallocStackLogging=1 MallocStackLoggingNoCompact=1 MallocScribble=1 leaks -q -atExit -- ./a.out $@
+
+# Borra el programa
+rm -rf a.out*
+
+echo "Process completed, and program deleted."
