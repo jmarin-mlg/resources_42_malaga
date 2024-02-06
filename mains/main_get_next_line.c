@@ -257,7 +257,8 @@ int	main(int argc, char *argv[])
 					close(fd[i]);
 			}
 
-			ft_free_memory(&line);
+			free(line);
+			line = NULL;
 		}
 
 		printf("\n");
