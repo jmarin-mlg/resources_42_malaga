@@ -15,11 +15,9 @@ para probar y validar tus propios proyectos.
 	git clone https://github.com/jmarin-mlg/resources_42_malaga.git
 
 	# Después clonamos mi proyecto GNL o bien utiliza tu propio proyecto GNL
-	cd ~/
+	git clone https://github.com/jmarin-mlg/get_next_line.git
 
-	git clone https://github.com/jmarin-mlg/libft_printf_gnl.git
-
-	cd ~/libft_printf_gnl/get_next_line/
+	cd ~/get_next_line/improved_version/
 
 	# Copiamos el main a nuestra carpeta de GNL
 	cp ~/resources_42_malaga/mains/main_get_next_line.c .
@@ -30,7 +28,7 @@ para probar y validar tus propios proyectos.
 
 	# Línea 18: #include "get_next_line_bonus.h"
 	# Línea 21: #define PATH_TEXTS "../../resources_42_malaga/texts"
-	
+
 	# Por último compila el programa y ejecútalo
 	cc -Wall -Werror -Wextra -D BUFFER_SIZE=42 main_get_next_line.c *bonus.c
 	./a.out
